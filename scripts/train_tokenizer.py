@@ -19,6 +19,14 @@ def train_tokenizer():
                 data = json.loads(line)
                 yield data["text"]
 
+    def read_all_text(file_path):
+        text_list = []
+        with open(file_path, "r", encoding="utf-8") as f:
+            for line in f:
+                data = json.loads(line)
+                text_list.append(data["text"])
+        return text_list
+
     data_path = '../dataset/pretrain_hq.jsonl'
 
     tokenizer = Tokenizer(models.BPE())
@@ -27,13 +35,14 @@ def train_tokenizer():
     special_tokens = ["<|endoftext|>", "<|im_start|>", "<|im_end|>"]
 
     trainer = trainers.BpeTrainer(
-        vocab_size=6000,
+        vocab_size=6400,
         special_tokens=special_tokens,
         show_progress=True,
         initial_alphabet=pre_tokenizers.ByteLevel.alphabet()
     )
 
     texts = read_texts_from_jsonl(data_path)
+    # texts = read_all_text(data_path)
 
     tokenizer.train_from_iterator(texts, trainer=trainer)
 
