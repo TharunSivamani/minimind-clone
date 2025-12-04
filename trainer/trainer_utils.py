@@ -51,7 +51,7 @@ def setup_seed(seed: int):
     torch.backends.cudnn.benchmark = False
 
 
-def lm_checkpoint(lm_config, weight="full_sft", model=None, optimizer=None, epochs=0, step=0, wandb=None, save_dir="../checkpoints", **kwargs):
+def lm_checkpoint(lm_config, weight="full_sft", model=None, optimizer=None, epoch=0, step=0, wandb=None, save_dir="../checkpoints", **kwargs):
 
     os.makedirs(save_dir, exist_ok=True)
     moe_path = '_moe' if lm_config.use_moe else ''
