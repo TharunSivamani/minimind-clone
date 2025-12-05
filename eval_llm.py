@@ -31,7 +31,8 @@ def init_model(args):
 
     else:
         model = AutoModelForCausalLM.from_pretrained(args.load_from, trust_remote_code=True)
-        print(f'MiniMind Model Parameters: {sum(p.numel() for p in model.parameters()) / 1e6:.2f} M(illion)')
+    
+    print(f'MiniMind Model Parameters: {sum(p.numel() for p in model.parameters()) / 1e6:.2f} M(illion)')
     return model.eval().to(args.device), tokenizer
 
 

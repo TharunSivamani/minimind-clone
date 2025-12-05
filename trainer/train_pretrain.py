@@ -98,12 +98,12 @@ if __name__ == "__main__":
     parser.add_argument("--save_dir", type=str, default="../out", help="Directory to save model files")
     parser.add_argument('--save_weight', default='pretrain', type=str, help="Prefix name for saved weights")
     parser.add_argument("--epochs", type=int, default=1, help="Number of training epochs (recommend 1 for zero-shot or 2–6 for full training)")
-    parser.add_argument("--batch_size", type=int, default=32, help="Batch size")
+    parser.add_argument("--batch_size", type=int, default=2, help="Batch size")
     parser.add_argument("--learning_rate", type=float, default=5e-4, help="Initial learning rate")
     parser.add_argument("--device", type=str, default="cuda:0" if torch.cuda.is_available() else "cpu", help="Training device")
     parser.add_argument("--dtype", type=str, default="bfloat16", help="Mixed precision data type")
     parser.add_argument("--num_workers", type=int, default=1, help="Number of data loading workers")
-    parser.add_argument("--accumulation_steps", type=int, default=8, help="Gradient accumulation steps")
+    parser.add_argument("--accumulation_steps", type=int, default=1, help="Gradient accumulation steps")
     parser.add_argument("--grad_clip", type=float, default=1.0, help="Gradient clipping threshold")
     parser.add_argument("--log_interval", type=int, default=100, help="Interval for logging output")
     parser.add_argument("--save_interval", type=int, default=100, help="Interval for saving checkpoints")
@@ -145,7 +145,7 @@ if __name__ == "__main__":
 
     # 5. model, data, optimizer
     model, tokenizer = init_model(lm_config, args.from_weight, device=args.device)
-    train_ds = PretrainDataset(args.data_path, tokenizer, max_length=args.max_length)
+    train_ds = PretrainDataset(args.data_path, tokenizer, max_length=args.max_seq_len)
     train_sampler = DistributedSampler(train_ds) if dist.is_initialized() else None
     scaler = torch.cuda.amp.GradScaler(enabled=(args.dtype == 'float16'))
     optimizer = optim.AdamW(model.parameters(), lr=args.learning_rate)
