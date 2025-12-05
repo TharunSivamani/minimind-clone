@@ -153,7 +153,7 @@ def main():
 
     for prompt in prompt_iter:
 
-        setup_seed(2025)
+        setup_seed(2026)
 
         if mode == 0:
             print(f"User: {prompt}")
