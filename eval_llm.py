@@ -195,7 +195,7 @@ def main():
             eos_token_id = tokenizer.eos_token_id,
             top_p = args.top_p,
             temperature = args.temperature,
-            frequency_penalty = 1.0
+            repetition_penalty = 1.0
         )
 
         # Decode assistant reply only (exclude prompt)
