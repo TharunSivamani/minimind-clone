@@ -193,7 +193,7 @@ def main():
             streamer = streamer,
             pad_token_id = tokenizer.pad_token_id,
             eos_token_id = tokenizer.eos_token_id,
-            top_p = args.top_p
+            top_p = args.top_p,
             temperature = args.temperature,
             frequency_penalty = 1.0
         )

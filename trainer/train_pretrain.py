@@ -71,7 +71,7 @@ def train_epoch(epoch, loader, iters, start_step=0, wandb=None):
             """
             eta_min = spend_time / (step + 1) * iters // 60 - spend_time // 60
 
-            Logger(f'Epoch:[{epoch+1}/{args.epochs}] ({step}/{iters}) | Loss: {current_loss:.6f} LR: {current_lr:.12f} | Epoch_Time: {eta_min} min:')
+            Logger(f'Epoch:[{epoch+1}/{args.epochs}] ({step}/{iters}) | Loss: {current_loss:.6f} | LR: {current_lr:.12f} | Epoch_Time: {eta_min} min:')
             
             if wandb: wandb.log({"loss": current_loss, "lr": current_lr, "epoch_Time": eta_min})
 
@@ -97,7 +97,7 @@ if __name__ == "__main__":
 
     parser.add_argument("--save_dir", type=str, default="../out", help="Directory to save model files")
     parser.add_argument('--save_weight', default='pretrain', type=str, help="Prefix name for saved weights")
-    parser.add_argument("--epochs", type=int, default=1, help="Number of training epochs (recommend 1 for zero-shot or 2–6 for full training)")
+    parser.add_argument("--epochs", type=int, default=6, help="Number of training epochs (recommend 1 for zero-shot or 2–6 for full training)")
     parser.add_argument("--batch_size", type=int, default=2, help="Batch size")
     parser.add_argument("--learning_rate", type=float, default=5e-4, help="Initial learning rate")
     parser.add_argument("--device", type=str, default="cuda:0" if torch.cuda.is_available() else "cpu", help="Training device")
@@ -111,7 +111,7 @@ if __name__ == "__main__":
     parser.add_argument('--num_hidden_layers', default=8, type=int, help="Number of hidden layers")
     parser.add_argument('--max_seq_len', default=512, type=int, help="Maximum sequence length for training")
     parser.add_argument('--use_moe', default=0, type=int, choices=[0, 1], help="Use MoE architecture (0=no, 1=yes)")
-    parser.add_argument("--data_path", type=str, default="../dataset/pretrain_hq.jsonl", help="Path to pretraining dataset")
+    parser.add_argument("--data_path", type=str, default="../dataset/pretrain_en.jsonl", help="Path to pretraining dataset")
     parser.add_argument('--from_weight', default='none', type=str, help="Which weight file to load from; 'none' if training from scratch")
     parser.add_argument('--from_resume', default=0, type=int, choices=[0, 1], help="Auto-detect and resume training (0=no, 1=yes)")
     parser.add_argument("--use_wandb", action="store_true", help="Enable wandb logging")

@@ -18,7 +18,7 @@ class MiniMindConfig(PretrainedConfig):
         num_key_value_heads: int = 2,
         vocab_size: int = 6400,
         rms_norm_eps: float = 1e-05,
-        rope_theta: int = 1000000.0,
+        rope_theta: float = 1000000.0,
         inference_rope_scaling: bool = False,
         flash_attn: bool = True,
         ####################################################
@@ -30,7 +30,7 @@ class MiniMindConfig(PretrainedConfig):
         n_routed_experts: int = 4,
         n_shared_experts: int = 1,
         scoring_func: str = "softmax",
-        aux_loss_alpha: float = 0.1,
+        aux_loss_alpha: float = 0.01,
         seq_aux: bool = True,
         norm_topk_prob: bool = True,
         **kwargs,
@@ -51,18 +51,14 @@ class MiniMindConfig(PretrainedConfig):
         self.rope_theta = rope_theta
         self.inference_rope_scaling = inference_rope_scaling
         # Extrapolated length = factor * original_max_position_embeddings = 32768
-        self.rope_scaling = (
-            {
-                "beta_fast": 32,
-                "beta_slow": 1,
-                "factor": 16,
-                "original_max_position_embeddings": 2048,
-                "attention_factor": 1.0,
-                "type": "yarn",
-            }
-            if self.inference_rope_scaling
-            else None
-        )
+        self.rope_scaling = {
+            "beta_fast": 32,
+            "beta_slow": 1,
+            "factor": 16,
+            "original_max_position_embeddings": 2048,
+            "attention_factor": 1.0,
+            "type": "yarn"
+        } if self.inference_rope_scaling else None
 
         self.flash_attn = flash_attn
 

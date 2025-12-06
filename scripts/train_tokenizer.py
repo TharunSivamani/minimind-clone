@@ -27,7 +27,7 @@ def train_tokenizer():
                 text_list.append(data["text"])
         return text_list
 
-    data_path = '../dataset/pretrain_hq.jsonl'
+    data_path = '../dataset/pretrain_en.jsonl'
 
     tokenizer = Tokenizer(models.BPE())
     tokenizer.pre_tokenizer = pre_tokenizers.ByteLevel(add_prefix_space=False)
