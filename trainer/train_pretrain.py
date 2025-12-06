@@ -71,7 +71,7 @@ def train_epoch(epoch, loader, iters, start_step=0, wandb=None):
             """
             eta_min = spend_time / (step + 1) * iters // 60 - spend_time // 60
 
-            Logger(f'Epoch:[{epoch+1}/{args.epochs}]({step}/{iters}) loss:{current_loss:.6f} lr:{current_lr:.12f} epoch_Time:{eta_min}min:')
+            Logger(f'Epoch:[{epoch+1}/{args.epochs}] ({step}/{iters}) | Loss: {current_loss:.6f} LR: {current_lr:.12f} | Epoch_Time: {eta_min} min:')
             
             if wandb: wandb.log({"loss": current_loss, "lr": current_lr, "epoch_Time": eta_min})
 
